@@ -5,13 +5,13 @@ turtle.tracer(1,0) #This helps the turtle move more smoothly
 
 SIZE_X=800
 SIZE_Y=500
-turtle.setup(SIZE_X, SIZE_Y) #Curious? It's the turtle window
-#size.
+turtle.setup(SIZE_X, SIZE_Y)
+
 
 turtle.penup()
 
 SQUARE_SIZE = 20
-START_LENGTH = 10
+START_LENGTH = 2
 
 #Initialize lists
 pos_list = []
@@ -23,6 +23,7 @@ food_stamps = []
 snake = turtle.clone()
 snake.shape("square")
 
+
 #Hide the turtle object (it's an arrow - we don't need to see it)
 turtle.hideturtle()
 
@@ -30,9 +31,10 @@ turtle.hideturtle()
 for i in range(START_LENGTH) :
     x_pos=snake.pos()[0] 
     y_pos=snake.pos()[1]
-   
+    
     x_pos+= SQUARE_SIZE 
-    my_pos=(x_pos,y_pos) 
+    my_pos=(x_pos,y_pos)
+    pos_list.append(my_pos)
     snake.goto(x_pos,y_pos) 
     new_stamp = snake.stamp()
     stamp_list.append(new_stamp)
@@ -131,25 +133,28 @@ def move_snake():
     stamp_list.append(new_stamp)
 
     
-    global food_stamps, food_pos
+    global food_stamps, food_pos, START_LENGTH
     if snake.pos() in food_pos:
         food_ind=food_pos.index(snake.pos())
         food.clearstamp(food_stamps[food_ind])
-
         food_pos.pop(food_ind)
-        food_stamps.pop(food_ind) 
+        food_stamps.pop(food_ind)
+        stamp_list.append
         print("You have eaten the food!")
         make_food()
-    
-    
-    old_stamp = stamp_list.pop(0)
-    snake.clearstamp(old_stamp)
-    pos_list.pop(0)
+        
+    else:
+        old_stamp = stamp_list.pop(0)
+        snake.clearstamp(old_stamp)
+        pos_list.pop(0)
 
     new_pos = snake.pos()
     new_x_pos = new_pos[0]
     new_y_pos = new_pos[1]
 
+    if pos_list[-1] in pos_list[0:-1]:
+        print("You eat yourself! Game over!")
+        quit()
     if new_x_pos >= RIGHT_EDGE:
         print("You hit the right edge! Game over!")
         quit()
@@ -162,6 +167,7 @@ def move_snake():
     if new_y_pos <= DOWN_EDGE:
         print("You hit the down edge! Game over!")
         quit()
+    
     turtle.ontimer(move_snake,TIME_STEP)
 move_snake()
 
