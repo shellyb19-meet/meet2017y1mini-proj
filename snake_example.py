@@ -167,11 +167,16 @@ def move_snake():
         food.clearstamp(food_stamps[food_ind])
         food_pos.pop(food_ind)
         food_stamps.pop(food_ind)
-        a = str(len(pos_list) - START_LENGTH)
-        turtle.write("score: " + a)
+##        a = str(len(pos_list) - START_LENGTH)
+##        turtle.write("score: " + a)
         stamp_list.append
         print("You have eaten the food!")
         make_food()
+        score = turtle.clone()
+        x = 0
+        x = x+1
+        score.clear()
+        score.write("score: " + str(x))
         
     else:
         old_stamp = stamp_list.pop(0)
